@@ -1,0 +1,169 @@
+---
+- name: Start home lab
+  hosts: servers
+  become: yes
+  vars_files:
+    - "vars/base.yml"
+    - "vars/secrets.yml"
+  tasks:
+    - name: Install Docker
+      include_role:
+        name: docker
+
+    - name: Run Watchtower
+      include_role:
+        name: watchtower
+
+    - name: Run cAdvisor
+      include_role:
+        name: cadvisor
+
+    - name: Run node-exporter
+      include_role:
+        name: node-exporter
+
+    - name: Run Traefik
+      include_role:
+        name: traefik
+      when: inventory_hostname in groups['services']
+
+    - name: Run Portainer
+      include_role:
+        name: portainer
+      when:
+        - inventory_hostname in groups['services']
+        - inventory_hostname == portainer_host
+
+    - name: Run Portainer Agent
+      include_role:
+        name: portainer-agent
+      when:
+        - inventory_hostname in lookup('inventory_hostnames', 'services:storages:monitoring')
+        - inventory_hostname != portainer_host
+
+    - name: Run PostgreSQL
+      include_role:
+        name: postgres
+      vars:
+        postgres_initdb: |
+          CREATE USER {{ planka_db_user }} WITH PASSWORD '{{ planka_db_password }}' CREATEDB;
+          CREATE DATABASE {{ planka_db }}
+              WITH
+              OWNER = {{ planka_db_user }}
+              ENCODING = 'UTF8'
+              LC_COLLATE = 'en_US.utf8'
+              LC_CTYPE = 'en_US.utf8'
+              TABLESPACE = pg_default
+              CONNECTION LIMIT = -1;
+          GRANT ALL PRIVILEGES ON DATABASE {{ planka_db }} TO {{ planka_db_user }};
+
+          CREATE USER {{ gitea_db_user }} WITH PASSWORD '{{ gitea_db_password }}' CREATEDB;
+          CREATE DATABASE {{ gitea_db }}
+              WITH
+              OWNER = {{ gitea_db_user }}
+              ENCODING = 'UTF8'
+              LC_COLLATE = 'en_US.utf8'
+              LC_CTYPE = 'en_US.utf8'
+              TABLESPACE = pg_default
+              CONNECTION LIMIT = -1;
+          GRANT ALL PRIVILEGES ON DATABASE {{ gitea_db }} TO {{ gitea_db_user }};
+
+          CREATE USER {{ penpot_db_user }} WITH PASSWORD '{{ penpot_db_password }}' CREATEDB;
+          CREATE DATABASE {{ penpot_db }}
+              WITH
+              OWNER = {{ penpot_db_user }}
+              ENCODING = 'UTF8'
+              LC_COLLATE = 'en_US.utf8'
+              LC_CTYPE = 'en_US.utf8'
+              TABLESPACE = pg_default
+              CONNECTION LIMIT = -1;
+          GRANT ALL PRIVILEGES ON DATABASE {{ penpot_db }} TO {{ penpot_db_user }};
+      when:
+        - inventory_hostname in groups['storages']
+        - inventory_hostname == postgres_host
+
+    - name: Run Docker Volume Backup
+      include_role:
+        name: docker-volume-backup
+      when:
+        - inventory_hostname in groups['storages']
+        - inventory_hostname == postgres_host
+
+    - name: Run Redis
+      include_role:
+        name: redis
+      when:
+        - inventory_hostname in groups['storages']
+        - inventory_hostname == redis_host
+
+    - name: Run MinIO
+      include_role:
+        name: minio
+      when:
+        - inventory_hostname in groups['services']
+        - inventory_hostname == minio_host
+
+    - name: Run Pi-hole
+      include_role:
+        name: pihole
+      when:
+        - inventory_hostname in groups['services']
+        - inventory_hostname == pihole_host
+
+    - name: Run pgAdmin
+      include_role:
+        name: pgadmin
+      when:
+        - inventory_hostname in groups['services']
+        - inventory_hostname == pgadmin_host
+
+    - name: Run Planka
+      include_role:
+        name: planka
+      when:
+        - inventory_hostname in groups['services']
+        - inventory_hostname == planka_host
+
+    - name: Run Gitea
+      include_role:
+        name: gitea
+      when:
+        - inventory_hostname in groups['services']
+        - inventory_hostname == gitea_host
+
+    - name: Run Penpot
+      include_role:
+        name: penpot
+      when:
+        - inventory_hostname in groups['services']
+        - inventory_hostname == penpot_host
+
+    - name: Run Grafana
+      include_role:
+        name: grafana
+      when:
+        - inventory_hostname in groups['services']
+        - inventory_hostname == grafana_host
+
+    - name: Run Uptime Kuma
+      include_role:
+        name: uptime-kuma
+      when:
+        - inventory_hostname in groups['services']
+        - inventory_hostname == uptime_kuma_host
+
+    - name: Run AlertManager
+      include_role:
+        name: alertmanager
+      when:
+        - inventory_hostname in groups['monitoring']
+        - inventory_hostname == alertmanager_host
+
+    - name: Run Prometheus
+      include_role:
+        name: prometheus
+      when:
+        - inventory_hostname in groups['monitoring']
+        - inventory_hostname == prometheus_host
+
+

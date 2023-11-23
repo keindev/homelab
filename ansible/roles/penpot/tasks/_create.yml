@@ -1,0 +1,94 @@
+---
+- name: Create Penpot Exporter container
+  docker_container:
+    name: "{{ penpot_exporter_name }}"
+    image: "{{ penpot_exporter_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    exposed_ports:
+      - "{{ penpot_exporter_port }}"
+    networks:
+      - name: "{{ network }}"
+    etc_hosts: >
+      {
+        "{{ penpot_name }}.{{ domain }}": "{{ hostvars[penpot_host]['ansible_default_ipv4']['address'] }}"
+      }
+    env:
+      PENPOT_PUBLIC_URI: "https://{{ penpot_name }}.{{ domain }}"
+      PENPOT_REDIS_URI: "{{ penpot_redis_url }}"
+
+- name: Create Penpot Backend container
+  docker_container:
+    name: "{{ penpot_backend_name }}"
+    image: "{{ penpot_backend_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    exposed_ports:
+      - "{{ penpot_backend_port }}"
+    networks:
+      - name: "{{ network }}"
+    env:
+      PENPOT_FLAGS: "disable-registration enable-login-with-password disable-email-verification enable-smtp enable-prepl-server disable-secure-session-cookies"
+      PENPOT_SECRET_KEY: "{{ penpot_secret }}"
+      PENPOT_PREPL_HOST: "0.0.0.0"
+      PENPOT_PUBLIC_URI: "https://{{ penpot_name }}.{{ domain }}"
+      PENPOT_DATABASE_URI: "{{ penpot_db_url }}"
+      PENPOT_DATABASE_USERNAME: "{{ penpot_db_user }}"
+      PENPOT_DATABASE_PASSWORD: "{{ password }}"
+      PENPOT_REDIS_URI: "{{ penpot_redis_url }}"
+      AWS_ACCESS_KEY_ID: "{{ penpot_aws_access_key }}"
+      AWS_SECRET_ACCESS_KEY: "{{ penpot_aws_secret_key }}"
+      PENPOT_ASSETS_STORAGE_BACKEND: "assets-s3"
+      PENPOT_STORAGE_ASSETS_S3_ENDPOINT: "{{ penpot_aws_endpoint }}"
+      PENPOT_STORAGE_ASSETS_S3_BUCKET: "{{ penpot_aws_bucket }}"
+      PENPOT_TELEMETRY_ENABLED: "true"
+      PENPOT_SMTP_DEFAULT_FROM: "no-reply@example.com"
+      PENPOT_SMTP_DEFAULT_REPLY_TO: "no-reply@example.com"
+      PENPOT_SMTP_HOST: "{{ penpot_mailcatch_name }}"
+      PENPOT_SMTP_PORT: "1025"
+      PENPOT_SMTP_USERNAME: ""
+      PENPOT_SMTP_PASSWORD: ""
+      PENPOT_SMTP_TLS: "false"
+      PENPOT_SMTP_SSL: "false"
+
+- name: Create Penpot Frontend container
+  docker_container:
+    name: "{{ penpot_frontend_name }}"
+    image: "{{ penpot_frontend_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    exposed_ports:
+      - "{{ penpot_frontend_port }}"
+    networks:
+      - name: "{{ network }}"
+    env:
+      PENPOT_FLAGS: "disable-registration enable-login-with-password"
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.penpot-https-redirect.redirectscheme.scheme: "https"
+      traefik.http.middlewares.penpot-https-redirect.redirectscheme.permanent: "true"
+      traefik.http.routers.penpot.entrypoints: "http"
+      traefik.http.routers.penpot.rule: "Host(`{{ penpot_name }}.{{ domain }}`)"
+      traefik.http.routers.penpot.middlewares: "penpot-https-redirect"
+      traefik.http.routers.penpot-secure.entrypoints: "https"
+      traefik.http.routers.penpot-secure.rule: "Host(`{{ penpot_name }}.{{ domain }}`)"
+      traefik.http.routers.penpot-secure.tls: "true"
+      traefik.http.routers.penpot-secure.service: "{{ penpot_name }}"
+      traefik.http.services.penpot.loadbalancer.server.port: "{{ penpot_frontend_port }}"
+      traefik.docker.network: "{{ network }}"
+
+- name: Create Penpot mailcatch container
+  docker_container:
+    name: "{{ penpot_mailcatch_name }}"
+    image: "{{ penpot_mailcatch_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    exposed_ports:
+      - 1025
+      - 1080
+    networks:
+      - name: "{{ network }}"

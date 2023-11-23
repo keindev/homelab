@@ -1,0 +1,16 @@
+---
+alertmanager_name: "alertmanager"
+alertmanager_home: "/opt/{{ alertmanager_name }}"
+alertmanager_port: "9093"
+alertmanager_image: "prom/alertmanager:latest"
+alertmanager_directories:
+  - path: "{{ alertmanager_home }}/"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  - path: "{{ alertmanager_home }}/config"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+alertmanager_volumes:
+  - "{{ alertmanager_home }}/config:/etc/alertmanager/"
+alertmanager_command:
+  - "--config.file=/etc/alertmanager/alertmanager.yml"

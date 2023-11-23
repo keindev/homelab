@@ -1,0 +1,10 @@
+---
+- name: Create Watchtower container
+  docker_container:
+    name: "{{ watchtower_name }}"
+    image: "{{ watchtower_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    env: "{{ watchtower_env }}"
+    volumes: "{{ watchtower_volumes }}"

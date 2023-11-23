@@ -1,0 +1,51 @@
+global:
+  scrape_interval: 1m
+
+rule_files:
+  - /etc/prometheus/rules/*.rules
+
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets:
+        - {{ hostvars[alertmanager_host]['ansible_default_ipv4']['address'] }}:9093
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 1m
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: '{{ minio_name }}'
+    metrics_path: /minio/v2/metrics/cluster
+    scheme: http
+    static_configs:
+      - targets: ['{{ hostvars[minio_host]['ansible_default_ipv4']['address'] }}:{{ minio_port }}']
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets:
+{% for host in groups['servers'] %}
+        - '{{ hostvars[host]['ansible_default_ipv4']['address'] }}:{{ node_exporter_port }}'
+{% endfor %}
+    relabel_configs:
+{% for host in groups['servers'] %}
+      - source_labels: [__address__]
+        regex: '{{ hostvars[host]['ansible_default_ipv4']['address'] }}:{{ node_exporter_port }}'
+        replacement: '{{ host }}'
+        target_label: instance
+{% endfor %}
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets:
+{% for host in groups['servers'] %}
+        - '{{ hostvars[host]['ansible_default_ipv4']['address'] }}:{{ cadvisor_port }}'
+{% endfor %}
+    relabel_configs:
+{% for host in groups['servers'] %}
+      - source_labels: [__address__]
+        regex: '{{ hostvars[host]['ansible_default_ipv4']['address'] }}:{{ cadvisor_port }}'
+        replacement: '{{ host }}'
+        target_label: instance
+{% endfor %}

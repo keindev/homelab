@@ -1,0 +1,11 @@
+---
+- name: Create Docker Volume Backup container
+  docker_container:
+    name: "{{ docker_volume_backup_name }}"
+    image: "{{ docker_volume_backup_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    env: "{{ docker_volume_backup_env }}"
+    volumes: "{{ docker_volume_backup_volumes }}"
+

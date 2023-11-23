@@ -1,0 +1,17 @@
+---
+- name: Create cadvisor container
+  docker_container:
+    name: "{{ cadvisor_name }}"
+    image: "{{ cadvisor_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    privileged: true
+    devices:
+      - "/dev/kmsg:/dev/kmsg"
+    exposed_ports:
+      - "{{ cadvisor_port }}"
+    published_ports:
+      - "{{ cadvisor_port }}:8080"
+    volumes: "{{ cadvisor_volumes }}"
+    command: "{{ cadvisor_command }}"

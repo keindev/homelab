@@ -1,0 +1,18 @@
+---
+penpot_name: "penpot"
+penpot_home: "/opt/{{ penpot_name }}"
+# Backend
+penpot_backend_name: "penpot-backend"
+penpot_backend_port: "6060"
+penpot_backend_image: "penpotapp/backend:latest"
+# Exporter
+penpot_exporter_name: "penpot-exporter"
+penpot_exporter_port: "6061"
+penpot_exporter_image: "penpotapp/exporter:latest"
+# Frontend
+penpot_frontend_name: "penpot-frontend"
+penpot_frontend_port: "80"
+penpot_frontend_image: "penpotapp/frontend:latest"
+# Mailcatch
+penpot_mailcatch_name: "penpot-mailcatch"
+penpot_mailcatch_image: "sj26/mailcatcher:latest"

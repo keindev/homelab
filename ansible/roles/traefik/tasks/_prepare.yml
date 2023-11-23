@@ -1,0 +1,41 @@
+---
+- name: Install apache2-utils if is absent
+  apt:
+    name: apache2-utils
+    state: present
+
+- name: Create htpasswd "user:password" string
+  shell:
+    cmd: 'echo $(htpasswd -nb {{ user }} {{ password }})'
+  register: traefik_basicauth_str
+
+- name: Set a basicauth fact
+  set_fact:
+    traefik_basicauth: "{{ traefik_basicauth_str.stdout }}"
+
+- name: Create directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    mode: "{{ item.mode | default('0755') }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+  with_items: "{{ traefik_directories }}"
+
+- name: Ensures acme.json file exists
+  file:
+    path: "{{ traefik_home }}/acme.json"
+    state: touch
+    mode: 0600
+
+- name: Adding traefik.yml file
+  template:
+    src: traefik.yml.j2
+    dest: "{{ traefik_home }}/traefik.yml"
+    mode: 0600
+
+- name: Adding config.yml file
+  template:
+    src: config.yml.j2
+    dest: "{{ traefik_home }}/config.yml"
+    mode: 0600
