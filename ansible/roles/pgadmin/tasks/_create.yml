@@ -1,0 +1,25 @@
+---
+- name: Create pgAdmin container
+  docker_container:
+    name: "{{ pgadmin_name }}"
+    image: "{{ pgadmin_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    networks:
+      - name: "{{ network }}"
+    env: "{{ pgadmin_env }}"
+    volumes: "{{ pgadmin_volumes }}"
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.pgadmin-https-redirect.redirectscheme.scheme: "https"
+      traefik.http.routers.pgadmin.entrypoints: "http"
+      traefik.http.routers.pgadmin.rule: "Host(`{{ pgadmin_name }}.{{ domain }}`)"
+      traefik.http.routers.pgadmin.middlewares: "pgadmin-https-redirect"
+      traefik.http.routers.pgadmin-secure.entrypoints: "https"
+      traefik.http.routers.pgadmin-secure.rule: "Host(`{{ pgadmin_name }}.{{ domain }}`)"
+      traefik.http.routers.pgadmin-secure.tls: "true"
+      traefik.http.routers.pgadmin-secure.service: "{{ pgadmin_name }}"
+      traefik.http.services.pgadmin.loadbalancer.server.port: "{{ pgadmin_port }}"
+      traefik.docker.network: "{{ network }}"
+

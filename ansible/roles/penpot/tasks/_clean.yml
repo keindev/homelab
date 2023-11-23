@@ -1,0 +1,28 @@
+---
+- name: Remove existing backend container
+  docker_container:
+    name: "{{ penpot_backend_name }}"
+    state: absent
+    purge_networks: true
+    force_kill: true
+
+- name: Remove existing exporter container
+  docker_container:
+    name: "{{ penpot_exporter_name }}"
+    state: absent
+    purge_networks: true
+    force_kill: true
+
+- name: Remove existing frontend container
+  docker_container:
+    name: "{{ penpot_frontend_name }}"
+    state: absent
+    purge_networks: true
+    force_kill: true
+
+- name: Remove existing mailcatch container
+  docker_container:
+    name: "{{ penpot_mailcatch_name }}"
+    state: absent
+    purge_networks: true
+    force_kill: true

@@ -1,0 +1,16 @@
+---
+- name: Create AlertManager container
+  docker_container:
+    name: "{{ alertmanager_name }}"
+    image: "{{ alertmanager_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    user: "root"
+    exposed_ports:
+      - "{{ alertmanager_port }}"
+    published_ports:
+      - "{{ alertmanager_port }}:{{ alertmanager_port }}"
+    volumes: "{{ alertmanager_volumes }}"
+    command: "{{ alertmanager_command }}"
+

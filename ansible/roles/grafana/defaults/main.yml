@@ -1,0 +1,23 @@
+---
+grafana_name: "grafana"
+grafana_home: "/opt/{{ grafana_name }}"
+grafana_port: "3000"
+grafana_image: "grafana/grafana:latest"
+grafana_directories:
+  - path: "{{ grafana_home }}/"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  - path: "{{ grafana_home }}/data"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  - path: "{{ grafana_home }}/provisioning"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+grafana_volumes:
+  - "{{ grafana_home }}/data:/var/lib/grafana"
+  - "{{ grafana_home }}/provisioning:/etc/grafana/provisioning"
+grafana_env:
+  GF_SECURITY_ADMIN_USER: "{{ user }}"
+  GF_SECURITY_ADMIN_PASSWORD: "{{ password }}"
+  GF_USERS_ALLOW_SIGN_UP: "false"
+

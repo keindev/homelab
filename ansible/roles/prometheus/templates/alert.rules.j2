@@ -1,0 +1,17 @@
+groups:
+{% for host in groups['servers'] %}
+{% if host != alertmanager_host %}
+
+- name: {{ host }}
+  rules:
+  - alert: InstanceDown
+    expr: up{job="node-exporter",instance="{{ host }}"} == 0
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Server {{ host }} down"
+      description: "{{ host }} has been down for more than 5 minutes."
+
+{% endif %}
+{% endfor %}

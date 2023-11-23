@@ -1,0 +1,14 @@
+---
+watchtower_name: "watchtower"
+watchtower_image: "containrrr/watchtower"
+watchtower_volumes:
+  - /var/run/docker.sock:/var/run/docker.sock
+  - /etc/localtime:/etc/localtime:ro
+watchtower_env:
+  TZ: "{{ timezone }}"
+  WATCHTOWER_CLEANUP: "true"
+  NO_COLOR: "true"
+  WATCHTOWER_POLL_INTERVAL: "86400"
+  WATCHTOWER_LIFECYCLE_HOOKS: "1"
+  WATCHTOWER_NOTIFICATIONS: "shoutrrr"
+  WATCHTOWER_NOTIFICATION_URL: "telegram://{{ watchtower_bot_token }}@telegram/?channels={{ telegram_chat_id }}"

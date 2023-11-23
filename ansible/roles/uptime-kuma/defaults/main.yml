@@ -1,0 +1,14 @@
+---
+uptime_kuma_name: "uptime-kuma"
+uptime_kuma_home: "/opt/{{ uptime_kuma_name }}"
+uptime_kuma_port: "3001"
+uptime_kuma_image: "louislam/uptime-kuma:latest"
+uptime_kuma_directories:
+  - path: "{{ uptime_kuma_home }}/"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  - path: "{{ uptime_kuma_home }}/data"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+uptime_kuma_volumes:
+  - "{{ uptime_kuma_home }}/data:/app/data"

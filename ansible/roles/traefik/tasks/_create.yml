@@ -1,0 +1,39 @@
+---
+- name: Create Traefik proxy network
+  docker_network:
+    name: "{{ network }}"
+
+- name: Create Traefik container
+  docker_container:
+    name: "{{ traefik_name }}"
+    image: "{{ traefik_image }}"
+    pull: yes
+    restart_policy: "unless-stopped"
+    recreate: true
+    networks:
+      - name: "{{ network }}"
+    exposed_ports:
+      - 80
+      - 443
+    published_ports:
+      - "80:80"
+      - "443:443"
+    env: "{{ traefik_env }}"
+    volumes: "{{ traefik_volumes }}"
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.traefik-auth.basicauth.users: "{{ traefik_basicauth }}"
+      traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme: "https"
+      traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto: "https"
+      traefik.http.routers.traefik.entrypoints: "http"
+      traefik.http.routers.traefik.rule: "Host(`{{ traefik_name }}.{{ domain }}`)"
+      traefik.http.routers.traefik.middlewares: "traefik-https-redirect"
+      traefik.http.routers.traefik-secure.entrypoints: "https"
+      traefik.http.routers.traefik-secure.rule: "Host(`{{ traefik_name }}.{{ domain }}`)"
+      traefik.http.routers.traefik-secure.middlewares: "traefik-auth"
+      traefik.http.routers.traefik-secure.tls: "true"
+      traefik.http.routers.traefik-secure.tls.certresolver: "cloudflare"
+      traefik.http.routers.traefik-secure.tls.domains[0].main: "{{ domain }}"
+      traefik.http.routers.traefik-secure.tls.domains[0].sans: "*.{{ domain }}"
+      traefik.http.routers.traefik-secure.service: "api@internal"
+
