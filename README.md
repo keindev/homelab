@@ -1,5 +1,15 @@
 <p align="center"><img src="https://cdn.jsdelivr.net/gh/keindev/home-services/media/banner.svg" alt="banner"></p>
 
+---
+
+<p align="center" style="display: flex; justify-content: center; gap: 10px;">
+<img width="60" src="https://cdn.jsdelivr.net/gh/keindev/home-services/media/icons/nas.png" alt="NAS">
+<img width="60" src="https://cdn.jsdelivr.net/gh/keindev/home-services/media/icons/bots/alert-manager.png" alt="Alert manager">
+<img width="60" src="https://cdn.jsdelivr.net/gh/keindev/home-services/media/icons/bots/backup.png" alt="Backup">
+<img width="60" src="https://cdn.jsdelivr.net/gh/keindev/home-services/media/icons/bots/uptime-kuma.png" alt="Uptime Kuma">
+<img width="60" src="https://cdn.jsdelivr.net/gh/keindev/home-services/media/icons/bots/watchtower.png" alt="Watchtower">
+</p>
+
 In my case, I am using:
 
 - `"Iron Man" Franky` (_franky 10.10.10.1_) - for services UI's, proxy and DNS
@@ -26,6 +36,7 @@ In my case, I am using:
   - [Node exporter](https://github.com/prometheus/node_exporter)
   - [Uptime Kuma](https://github.com/louislam/uptime-kuma)
   - [Alert manager](https://prometheus.io/docs/alerting/latest/alertmanager/)
+  - [Watchtower](https://github.com/containrrr/watchtower)
   - [bots](https://telegram.org/)
 - Storage:
   - [PostgreSQL](https://www.postgresql.org/)
