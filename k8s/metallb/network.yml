@@ -1,0 +1,53 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: internal-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.8.30-192.168.8.40
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: internal
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - internal-pool
+  nodeSelectors:
+  - matchLabels:
+      kubernetes.io/hostname: ace
+  - matchLabels:
+      kubernetes.io/hostname: chopper
+  - matchLabels:
+      kubernetes.io/hostname: franky
+  - matchLabels:
+      kubernetes.io/hostname: jinbe
+
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: external-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.0.22-192.168.0.30
+
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: external
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - external-pool
+  nodeSelectors:
+  - matchLabels:
+      kubernetes.io/hostname: dorry
+  - matchLabels:
+      kubernetes.io/hostname: brogy
