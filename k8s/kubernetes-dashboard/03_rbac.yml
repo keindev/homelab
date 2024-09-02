@@ -18,6 +18,7 @@ subjects:
 - kind: ServiceAccount
   name: admin
   namespace: kubernetes-dashboard
+
 ---
 apiVersion: v1
 kind: Secret
