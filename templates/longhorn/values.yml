@@ -1,2 +1,4 @@
 defaultSettings:
   upgradeChecker: false
+preUpgradeChecker:
+  jobEnabled: false
