@@ -68,6 +68,7 @@ metadata:
     app.kubernetes.io/version: v1.7.0
 data:
   default-setting.yaml: |-
+    upgrade-checker: false
     priority-class: longhorn-critical
     disable-revision-counter: true
 ---
