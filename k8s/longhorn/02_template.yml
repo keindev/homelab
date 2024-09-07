@@ -68,6 +68,8 @@ metadata:
     app.kubernetes.io/version: v1.7.1
 data:
   default-setting.yaml: |-
+    backup-target: "cifs://192.168.8.4/backups/longhorn/"
+    backup-target-credential-secret: "cifs-secret"
     upgrade-checker: false
     priority-class: longhorn-critical
     disable-revision-counter: true
