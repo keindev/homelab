@@ -1,0 +1,33 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  destination:
+    namespace: cert-manager
+    server: https://kubernetes.default.svc
+  source:
+    path: k8s/cert-manager
+    repoURL: https://github.com/keindev/homelab.git
+    targetRevision: main
+    kustomize:
+      patches:
+        - target:
+            kind: ClusterIssuer
+            name: letsencrypt-production
+          patch: |-
+            - op: replace
+              path: /spec/acme/email
+              value: <email>
+            - op: replace
+              path: /spec/acme/solvers/0/dns01/cloudflare/email
+              value: <email>
+  project: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+
+
+
