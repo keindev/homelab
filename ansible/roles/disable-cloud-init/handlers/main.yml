@@ -1,0 +1,10 @@
+---
+- name: Reboot
+  reboot:
+    msg: "Reboot initiated by Ansible after cloud-init changed"
+  listen: "reboot"
+
+- name: Apply the new configuration
+  command: dpkg-reconfigure -f noninteractive cloud-init
+  notify: reboot
+  listen: reconfigure

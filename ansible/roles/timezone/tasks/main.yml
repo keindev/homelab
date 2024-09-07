@@ -1,0 +1,4 @@
+---
+- name: Set same timezone on every node
+  community.general.timezone:
+    name: "{{ timezone }}"

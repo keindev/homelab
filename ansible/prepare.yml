@@ -1,0 +1,26 @@
+---
+- name: Prepare servers
+  hosts: all
+  become: true
+  vars_files:
+    - "vars/main.yml"
+  tasks:
+    - name: Disable cloud-init
+      include_role:
+        name: disable-cloud-init
+
+    - name: Disable Swap
+      include_role:
+        name: disable-swap
+
+    - name: Install Docker
+      include_role:
+        name: docker
+
+    - name: Install Timezone
+      include_role:
+        name: timezone
+
+    - name:  Enable IPv4/IPv6 forwarding
+      include_role:
+        name: sysctl

@@ -1,7 +1,0 @@
----
-redis_name: "redis"
-redis_port: "6379"
-redis_image: "bitnami/redis:latest"
-redis_env:
-  TZ: "{{ timezone }}"
-  ALLOW_EMPTY_PASSWORD: "yes"

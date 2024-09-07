@@ -1,0 +1,7 @@
+---
+- name: Disable SWAP
+  shell:
+    cmd: |
+      swapoff -a
+  args:
+    executable: /bin/bash

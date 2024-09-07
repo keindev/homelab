@@ -1,0 +1,90 @@
+---
+- name: Install Docker packages (with downgrade option).
+  package:
+    name:
+      - "docker-ce"
+      - "docker-ce-cli"
+      - "docker-ce-rootless-extras"
+      - "containerd.io"
+      - "docker-buildx-plugin"
+      - "python3"
+      - "python-is-python3"
+      - "python3-pip"
+      - "virtualenv"
+      - "python3-setuptools"
+      - "apt-transport-https"
+      - "ca-certificates"
+      - "curl"
+      - "software-properties-common"
+    state: present
+    allow_downgrade: true
+  notify: restart docker
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Install docker-compose-plugin (with downgrade option).
+  package:
+    name: docker-compose-plugin
+    state: present
+    allow_downgrade: true
+  notify: restart docker
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+
+- name: Ensure /etc/docker/ directory exists.
+  file:
+    path: /etc/docker
+    state: directory
+    mode: 0755
+  when: docker_daemon_options.keys() | length > 0
+
+- name: Configure Docker daemon options.
+  copy:
+    content: "{{ docker_daemon_options | to_nice_json }}"
+    dest: /etc/docker/daemon.json
+    mode: 0644
+  when: docker_daemon_options.keys() | length > 0
+  notify: restart docker
+
+- name: Ensure Docker is started and enabled at boot.
+  service:
+    name: docker
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Ensure handlers are notified now to avoid firewall conflicts.
+  meta: flush_handlers
+
+- name: Check current docker-compose version.
+  command: "{{ docker_compose_path }} --version"
+  register: docker_compose_vsn
+  check_mode: false
+  changed_when: false
+  failed_when: false
+
+- set_fact:
+    docker_compose_current_version: "{{ docker_compose_vsn.stdout | regex_search('(\\d+(\\.\\d+)+)') }}"
+  when: >
+    docker_compose_vsn.stdout is defined
+    and (docker_compose_vsn.stdout | length > 0)
+
+- name: Delete existing docker-compose version if it's different.
+  file:
+    path: "{{ docker_compose_path }}"
+    state: absent
+  when: >
+    docker_compose_current_version is defined
+    and (docker_compose_version | regex_replace('v', '')) not in docker_compose_current_version
+
+- name: Install Docker Compose (if configured).
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: "{{ docker_compose_path }}"
+    mode: 0755
+  when: >
+    (docker_compose_current_version is not defined)
+    or (docker_compose_current_version | length == 0)
+    or (docker_compose_current_version is version((docker_compose_version | regex_replace('v', '')), '<'))

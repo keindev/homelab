@@ -1,0 +1,11 @@
+---
+- name: Disable all services in cloud-init
+  copy:
+    dest: "/etc/cloud/cloud.cfg.d/90_dpkg.cfg"
+    content: "datasource_list: [ None ]"
+    mode: 0644
+  when: disable_cloud_init_dpkg_stats.stat.exists
+  notify: reconfigure
+
+- name: Running handlers
+  meta: flush_handlers

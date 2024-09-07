@@ -1,0 +1,16 @@
+---
+- name: Purge package
+  apt:
+    purge: true
+    state: absent
+    name: cloud-init
+  notify: reboot
+
+- name: Delete folders
+  file:
+    state: absent
+    path: "{{ item }}"
+  with_items:
+    - "/etc/cloud/"
+    - "/var/lib/cloud/"
+  notify: reboot

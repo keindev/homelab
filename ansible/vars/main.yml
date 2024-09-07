@@ -1,0 +1,8 @@
+---
+# Main
+user: user
+timezone: "Europe/Moscow"
+# Networks
+network: "proxy"
+dns_primary: "1.1.1.1"
+dns_secondary: "1.0.0.1"

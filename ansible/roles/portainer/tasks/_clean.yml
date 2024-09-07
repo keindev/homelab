@@ -1,7 +1,0 @@
----
-- name: Remove existing container
-  docker_container:
-    name: "{{ portainer_name }}"
-    state: absent
-    purge_networks: true
-    force_kill: true

@@ -1,5 +1,0 @@
----
-- include_tasks: _clean.yml
-- include_tasks: _prepare.yml
-- include_tasks: _create.yml
-

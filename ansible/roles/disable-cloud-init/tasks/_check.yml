@@ -1,0 +1,5 @@
+---
+- name: Check folders
+  stat:
+    path: "/etc/cloud/cloud.cfg.d/90_dpkg.cfg"
+  register: disable_cloud_init_dpkg_stats

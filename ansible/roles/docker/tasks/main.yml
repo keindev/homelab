@@ -1,6 +1,4 @@
 ---
-- include_tasks: _install-docker.yml
-- include_tasks: _check.yml
-- include_tasks: _install-plugin.yml
-- include_tasks: _post-install.yml
-
+- include_tasks: _prepare.yml
+- include_tasks: _install.yml
+- include_tasks: _configure.yml
