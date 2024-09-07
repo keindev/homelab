@@ -1,0 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault-secrets-operator
+  namespace: argocd
+spec:
+  destination:
+    namespace: vault-secrets-operator-system
+    server: https://kubernetes.default.svc
+  source:
+    path: k8s/vault-secrets-operator
+    repoURL: https://github.com/keindev/homelab.git
+    targetRevision: main
+  project: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+
