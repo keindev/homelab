@@ -28,5 +28,3 @@ spec:
   tls:
     secretName: local-keindev-ru-tls
 
-
-
