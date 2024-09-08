@@ -4,7 +4,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: authentik
-  namespace: "authentik"
+  namespace: authentik
   labels:
     helm.sh/chart: "serviceAccount-2.0.0"
     app.kubernetes.io/name: "serviceAccount"
@@ -52,14 +52,14 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: authentik
-    namespace: "authentik"
+    namespace: authentik
 ---
 # Source: authentik/charts/serviceAccount/templates/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: authentik
-  namespace: "authentik"
+  namespace: authentik
   labels:
     helm.sh/chart: "serviceAccount-2.0.0"
     app.kubernetes.io/name: "serviceAccount"
@@ -135,7 +135,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: authentik
-  namespace: "authentik"
+  namespace: authentik
   labels:
     helm.sh/chart: "serviceAccount-2.0.0"
     app.kubernetes.io/name: "serviceAccount"
@@ -150,14 +150,14 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: authentik
-    namespace: "authentik"
+    namespace: authentik
 ---
 # Source: authentik/templates/server/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: authentik-server
-  namespace: "authentik"
+  namespace: authentik
   labels:
     helm.sh/chart: "authentik-2024.8.1"
     app.kubernetes.io/name: "authentik"
@@ -187,7 +187,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: authentik-server
-  namespace: "authentik"
+  namespace: authentik
   labels:
     helm.sh/chart: "authentik-2024.8.1"
     app.kubernetes.io/name: "authentik"
@@ -292,7 +292,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: authentik-worker
-  namespace: "authentik"
+  namespace: authentik
   labels:
     helm.sh/chart: "authentik-2024.8.1"
     app.kubernetes.io/name: "authentik"
@@ -385,7 +385,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: authentik-server
-  namespace: "authentik"
+  namespace: authentik
   labels:
     helm.sh/chart: "authentik-2024.8.1"
     app.kubernetes.io/name: "authentik"
