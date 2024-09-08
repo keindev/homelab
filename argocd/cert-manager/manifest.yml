@@ -20,14 +20,12 @@ spec:
           patch: |-
             - op: replace
               path: /spec/acme/email
-              value: <email>
+              value: <EMAIL>
             - op: replace
               path: /spec/acme/solvers/0/dns01/cloudflare/email
-              value: <email>
+              value: <EMAIL>
   project: default
   syncPolicy:
     automated:
       selfHeal: true
-
-
 
