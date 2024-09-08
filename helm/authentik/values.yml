@@ -1,13 +1,13 @@
 ---
 authentik:
-  secret_key: "secret_key"
+  secret_key: "<secret_key>"
   error_reporting:
     enabled: false
   postgresql:
     name: authentik
     host: postgres.postgres.svc.cluster.local
     user: authentik
-    password: password
+    password: "<password>"
   redis:
     host: redis.redis.svc.cluster.local
 

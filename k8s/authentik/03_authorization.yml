@@ -31,7 +31,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: authentik-cluster-role
-  namespace: authentik
 subjects:
   - kind: ServiceAccount
     name: authentik-vault-service-account
@@ -124,7 +123,6 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: authentik-role
-  namespace: authentik
 subjects:
   - kind: ServiceAccount
     name: authentik-vault-service-account
