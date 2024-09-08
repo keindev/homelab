@@ -52,7 +52,7 @@ spec:
   template:
     metadata:
       labels:
-        app: pgadmin-bash
+        app: pgadmin
     spec:
       containers:
         - name: pgadmin-bash
