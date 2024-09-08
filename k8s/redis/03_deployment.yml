@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+        name: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        args: ["--appendonly", "yes"]
+        ports:
+          - name: redis-port
+            containerPort: 6379
+        volumeMounts:
+          - name: redis-lv-storage
+            mountPath: /data
+        env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+      volumes:
+        - name: redis-lv-storage
+          persistentVolumeClaim:
+            claimName: redis-pvc
