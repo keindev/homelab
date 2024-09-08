@@ -1,0 +1,19 @@
+---
+authentik:
+  secret_key: "secret_key"
+  error_reporting:
+    enabled: false
+  postgresql:
+    name: authentik
+    host: postgres.postgres.svc.cluster.local
+    user: authentik
+    password: password
+  redis:
+    host: redis.redis.svc.cluster.local
+
+server:
+  ingress:
+    ingressClassName: traefik
+    enabled: true
+    hosts:
+      - authentik.keindev.ru
