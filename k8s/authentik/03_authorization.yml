@@ -1,0 +1,131 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: authentik-cluster-role
+  namespace: authentik
+  labels:
+    app.kubernetes.io/name: "serviceAccount"
+    app.kubernetes.io/instance: "authentik"
+    app.kubernetes.io/part-of: "authentik"
+    app.kubernetes.io/version: "2.0.0"
+rules:
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: authentik-cluster-role-binding
+  namespace: authentik
+  labels:
+    app.kubernetes.io/name: "serviceAccount"
+    app.kubernetes.io/instance: "authentik"
+    app.kubernetes.io/part-of: "authentik"
+    app.kubernetes.io/version: "2.0.0"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: authentik-cluster-role
+  namespace: authentik
+subjects:
+  - kind: ServiceAccount
+    name: authentik-vault-service-account
+    namespace: authentik
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: authentik-role
+  namespace: authentik
+  labels:
+    app.kubernetes.io/name: "serviceAccount"
+    app.kubernetes.io/instance: "authentik"
+    app.kubernetes.io/part-of: "authentik"
+    app.kubernetes.io/version: "2.0.0"
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+      - services
+      - configmaps
+    verbs:
+      - get
+      - create
+      - delete
+      - list
+      - patch
+  - apiGroups:
+      - extensions
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - get
+      - create
+      - delete
+      - list
+      - patch
+  - apiGroups:
+      - extensions
+      - networking.k8s.io
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - create
+      - delete
+      - list
+      - patch
+  - apiGroups:
+      - traefik.containo.us
+      - traefik.io
+    resources:
+      - middlewares
+    verbs:
+      - get
+      - create
+      - delete
+      - list
+      - patch
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - servicemonitors
+    verbs:
+      - get
+      - create
+      - delete
+      - list
+      - patch
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: authentik-role-binding
+  namespace: authentik
+  labels:
+    app.kubernetes.io/name: "serviceAccount"
+    app.kubernetes.io/instance: "authentik"
+    app.kubernetes.io/part-of: "authentik"
+    app.kubernetes.io/version: "2.0.0"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: authentik-role
+  namespace: authentik
+subjects:
+  - kind: ServiceAccount
+    name: authentik-vault-service-account
+    namespace: authentik
