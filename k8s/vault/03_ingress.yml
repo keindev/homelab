@@ -16,6 +16,6 @@ spec:
       services:
         - name: vault-ui
           namespace: vault
-          port: 80
+          port: 8200
   tls:
     secretName: local-keindev-ru-tls
