@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: pgAdmin
+  name: pgadmin
   namespace: argocd
 spec:
   destination:
