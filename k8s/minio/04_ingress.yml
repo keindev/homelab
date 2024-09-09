@@ -14,7 +14,7 @@ spec:
       match: Host(`minio.keindev.ru`)
       priority: 10
       services:
-        - name: minio-service
+        - name: minio
           namespace: minio
           port: 80
   tls:
