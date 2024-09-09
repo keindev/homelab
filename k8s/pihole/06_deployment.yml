@@ -24,6 +24,8 @@ spec:
         app: pihole
         release: pihole
     spec:
+      nodeSelector:
+        network/segment: external
       dnsPolicy: None
       dnsConfig:
         nameservers:
