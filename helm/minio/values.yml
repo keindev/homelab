@@ -1,0 +1,23 @@
+auth:
+  existingSecret: "minio-auth-secret"
+
+disableWebUI: false
+
+ingress:
+  enabled: false
+
+persistence:
+  enabled: true
+  storageClass: "longhorn"
+
+serviceAccount:
+  create: false
+  name: "minio-vault-service-account"
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/path: "/minio/v2/metrics/cluster"
+  prometheus.io/port: "9000"
+
+metrics:
+  enabled: true
