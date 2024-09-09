@@ -16,7 +16,7 @@ spec:
       services:
         - name: minio
           namespace: minio
-          port: 80
+          port: 9001
   tls:
     secretName: local-keindev-ru-tls
 
