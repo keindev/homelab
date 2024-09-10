@@ -125,11 +125,13 @@ spec:
         prometheus.io/port: "9000"
         prometheus.io/scrape: "true"
     spec:
-      
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
       serviceAccountName: minio-vault-service-account
       affinity:
         podAffinity:
-          
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
@@ -140,7 +142,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
-          
+
       automountServiceAccountToken: false
       securityContext:
         fsGroup: 1001
