@@ -14,8 +14,8 @@ spec:
       match: Host(`excalidraw.keindev.ru`)
       priority: 10
       services:
-        - name: pgadmin-service
-          namespace: pgadmin
+        - name: excalidraw-service
+          namespace: excalidraw
           port: 80
   tls:
     secretName: local-keindev-ru-tls
