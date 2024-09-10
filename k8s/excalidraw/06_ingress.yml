@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: excalidraw
+  namespace: excalidraw
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`excalidraw.keindev.ru`)
+      priority: 10
+      services:
+        - name: pgadmin-service
+          namespace: pgadmin
+          port: 80
+  tls:
+    secretName: local-keindev-ru-tls
