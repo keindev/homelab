@@ -2,8 +2,8 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: penpot-frontend
-  namespace: penpot-frontend
+  name: penpot-frontend-ingress
+  namespace: penpot
   annotations:
     kubernetes.io/ingress.class: traefik-external
 spec:
