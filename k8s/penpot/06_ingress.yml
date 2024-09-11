@@ -59,3 +59,33 @@ spec:
           port: 6060
   tls:
     secretName: local-keindev-ru-tls
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: penpot-mailcatch
+  namespace: penpot
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`mailcatch.keindev.ru`)
+      priority: 10
+      services:
+        - name: penpot-mailcatch
+          port: 1080
+      middlewares:
+        - name: authentik
+          namespace: authentik
+    - kind: Rule
+      match: "Host(`mailcatch.keindev.ru`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      priority: 15
+      services:
+        - kind: Service
+          name: authentik-server.authentik.svc.cluster.local
+  tls:
+    secretName: local-keindev-ru-tls
