@@ -47,6 +47,9 @@ spec:
         - ip: "192.168.8.33"
           hostnames:
             - "authentik.keindev.ru"
+        - ip: "192.168.8.33"
+          hostnames:
+            - "minio.keindev.ru"
       containers:
         - name: penpot-backend
           image: penpotapp/backend:latest
@@ -74,6 +77,10 @@ spec:
       labels:
         app: penpot-exporter
     spec:
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "minio.keindev.ru"
       containers:
         - name: penpot-exporter
           image: penpotapp/exporter:latest
