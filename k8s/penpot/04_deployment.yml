@@ -42,11 +42,11 @@ spec:
     metadata:
       labels:
         app: penpot-backend
-    hostAliases:
+    spec:
+      hostAliases:
         - ip: "192.168.8.33"
           hostnames:
             - "authentik.keindev.ru"
-    spec:
       containers:
         - name: penpot-backend
           image: penpotapp/backend:latest
