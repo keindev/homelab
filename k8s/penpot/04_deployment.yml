@@ -1,0 +1,112 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: penpot-frontend
+  namespace: penpot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: penpot-frontend
+  template:
+    metadata:
+      labels:
+        app: penpot-frontend
+    spec:
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
+      containers:
+        - name: penpot-frontend
+          image: penpotapp/frontend:latest
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: penpot-common-secret
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: penpot-backend
+  namespace: penpot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: penpot-backend
+  template:
+    metadata:
+      labels:
+        app: penpot-backend
+    hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
+    spec:
+      containers:
+        - name: penpot-backend
+          image: penpotapp/backend:latest
+          ports:
+            - containerPort: 6060
+          envFrom:
+            - secretRef:
+                name: penpot-common-secret
+            - secretRef:
+                name: penpot-secret
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: penpot-exporter
+  namespace: penpot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: penpot-exporter
+  template:
+    metadata:
+      labels:
+        app: penpot-exporter
+    spec:
+      containers:
+        - name: penpot-exporter
+          image: penpotapp/exporter:latest
+          ports:
+            - containerPort: 6061
+          envFrom:
+            - secretRef:
+                name: penpot-common-secret
+          env:
+            - name: PENPOT_PUBLIC_URI
+              value: "http://penpot-frontend.penpot.svc.cluster.local/"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: penpot-mailcatch
+  namespace: penpot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: penpot-mailcatch
+  template:
+    metadata:
+      labels:
+        app: penpot-mailcatch
+    spec:
+      containers:
+        - name: penpot-exporter
+          image: sj26/mailcatcher:latest
+          ports:
+            - name: ui
+              containerPort: 1080
+            - name: mail
+              containerPort: 1025

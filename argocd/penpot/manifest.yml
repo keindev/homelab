@@ -1,0 +1,18 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: penpot
+  namespace: argocd
+spec:
+  destination:
+    namespace: penpot
+    server: https://kubernetes.default.svc
+  source:
+    path: k8s/penpot
+    repoURL: https://github.com/keindev/homelab.git
+    targetRevision: main
+  project: default
+  syncPolicy:
+    automated:
+      selfHeal: true
