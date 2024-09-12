@@ -12,7 +12,7 @@ spec:
   routes:
     - kind: Rule
       match: Host(`minio.keindev.ru`)
-      priority: 20
+      priority: 10
       services:
         - name: minio
           namespace: minio
@@ -29,6 +29,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: traefik-external
 spec:
+  entryPoints:
+    - websecure
   routes:
     - kind: Rule
       match: Host(`buckets.keindev.ru`)
