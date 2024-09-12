@@ -14,7 +14,8 @@ spec:
       match: Host(`penpot.keindev.ru`)
       priority: 10
       services:
-        - name: penpot-frontend
+        - kind: Service
+          name: penpot-frontend
           namespace: penpot
           port: 80
     - kind: Rule
