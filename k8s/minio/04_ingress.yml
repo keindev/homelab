@@ -60,7 +60,7 @@ spec:
       match: Host(`buckets.keindev.ru`)
       services:
         - name: minio
-          port: 433
+          port: 9000
           serversTransport: minio-buckets-transport
       middlewares:
         - name: minio-buckets-security
