@@ -52,6 +52,8 @@ kind: IngressRoute
 metadata:
   name: minio-buckets
   namespace: minio
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
 spec:
   entryPoints:
     - websecure
@@ -60,6 +62,7 @@ spec:
       match: Host(`buckets.keindev.ru`)
       services:
         - name: minio
+          namespace: minio
           port: 9000
           serversTransport: minio-buckets-transport
       middlewares:
