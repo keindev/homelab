@@ -54,6 +54,9 @@ subjects:
   - kind: ServiceAccount
     name: authentik
     namespace: "authentik"
+  - kind: ServiceAccount
+    name: authentik-vault-service-account
+    namespace: "authentik"
 ---
 # Source: authentik/charts/serviceAccount/templates/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -151,4 +154,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: authentik
+    namespace: "authentik"
+  - kind: ServiceAccount
+    name: authentik-vault-service-account
     namespace: "authentik"

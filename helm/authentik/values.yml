@@ -13,7 +13,4 @@ authentik:
 
 server:
   ingress:
-    ingressClassName: traefik
-    enabled: true
-    hosts:
-      - authentik.keindev.ru
+    enabled: false
