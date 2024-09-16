@@ -1,12 +1,29 @@
 ---
+# Source: authentik/charts/serviceAccount/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: authentik
+  namespace: "authentik"
+  labels:
+    helm.sh/chart: "serviceAccount-2.0.0"
+    app.kubernetes.io/name: "serviceAccount"
+    app.kubernetes.io/instance: "authentik"
+    app.kubernetes.io/managed-by: "Helm"
+    app.kubernetes.io/part-of: "authentik"
+    app.kubernetes.io/version: "2.0.0"
+
+---
+# Source: authentik/charts/serviceAccount/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: authentik-cluster-role
-  namespace: authentik
+  name: "authentik-authentik"
   labels:
+    helm.sh/chart: "serviceAccount-2.0.0"
     app.kubernetes.io/name: "serviceAccount"
     app.kubernetes.io/instance: "authentik"
+    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/part-of: "authentik"
     app.kubernetes.io/version: "2.0.0"
 rules:
@@ -17,33 +34,38 @@ rules:
     verbs:
       - list
 ---
+# Source: authentik/charts/serviceAccount/templates/clusterrolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: authentik-cluster-role-binding
-  namespace: authentik
+  name: "authentik-authentik"
   labels:
+    helm.sh/chart: "serviceAccount-2.0.0"
     app.kubernetes.io/name: "serviceAccount"
     app.kubernetes.io/instance: "authentik"
+    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/part-of: "authentik"
     app.kubernetes.io/version: "2.0.0"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: authentik-cluster-role
+  name: "authentik-authentik"
 subjects:
   - kind: ServiceAccount
-    name: authentik-vault-service-account
-    namespace: authentik
+    name: authentik
+    namespace: "authentik"
 ---
+# Source: authentik/charts/serviceAccount/templates/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: authentik-role
-  namespace: authentik
+  name: authentik
+  namespace: "authentik"
   labels:
+    helm.sh/chart: "serviceAccount-2.0.0"
     app.kubernetes.io/name: "serviceAccount"
     app.kubernetes.io/instance: "authentik"
+    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/part-of: "authentik"
     app.kubernetes.io/version: "2.0.0"
 rules:
@@ -109,21 +131,24 @@ rules:
     verbs:
       - list
 ---
+# Source: authentik/charts/serviceAccount/templates/rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: authentik-role-binding
-  namespace: authentik
+  name: authentik
+  namespace: "authentik"
   labels:
+    helm.sh/chart: "serviceAccount-2.0.0"
     app.kubernetes.io/name: "serviceAccount"
     app.kubernetes.io/instance: "authentik"
+    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/part-of: "authentik"
     app.kubernetes.io/version: "2.0.0"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: authentik-role
+  name: authentik
 subjects:
   - kind: ServiceAccount
-    name: authentik-vault-service-account
-    namespace: authentik
+    name: authentik
+    namespace: "authentik"

@@ -1,15 +1,18 @@
 ---
+# Source: authentik/templates/server/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: authentik-server
-  namespace: authentik
+  namespace: "authentik"
   labels:
+    helm.sh/chart: "authentik-2024.8.2"
     app.kubernetes.io/name: "authentik"
     app.kubernetes.io/instance: "authentik"
     app.kubernetes.io/component: "server"
+    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/part-of: "authentik"
-    app.kubernetes.io/version: "2024.8.1"
+    app.kubernetes.io/version: "2024.8.2"
 spec:
   replicas: 1
   revisionHistoryLimit: 3
@@ -21,16 +24,18 @@ spec:
   template:
     metadata:
       labels:
+        helm.sh/chart: "authentik-2024.8.2"
         app.kubernetes.io/name: "authentik"
         app.kubernetes.io/instance: "authentik"
         app.kubernetes.io/component: "server"
+        app.kubernetes.io/managed-by: "Helm"
         app.kubernetes.io/part-of: "authentik"
-        app.kubernetes.io/version: "2024.8.1"
+        app.kubernetes.io/version: "2024.8.2"
     spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: server
-          image: ghcr.io/goauthentik/server:2024.8.1
+          image: ghcr.io/goauthentik/server:2024.8.2
           imagePullPolicy: IfNotPresent
           args:
             - server
@@ -55,6 +60,7 @@ spec:
               containerPort: 9300
               protocol: TCP
           livenessProbe:
+
             failureThreshold: 3
             httpGet:
               path: /-/health/live/
@@ -64,6 +70,7 @@ spec:
             successThreshold: 1
             timeoutSeconds: 1
           readinessProbe:
+
             failureThreshold: 3
             httpGet:
               path: /-/health/ready/
@@ -73,6 +80,7 @@ spec:
             successThreshold: 1
             timeoutSeconds: 1
           startupProbe:
+
             failureThreshold: 60
             httpGet:
               path: /-/health/live/
@@ -81,6 +89,8 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
+          resources:
+            {}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -94,17 +104,20 @@ spec:
                 topologyKey: kubernetes.io/hostname
       enableServiceLinks: true
 ---
+# Source: authentik/templates/worker/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: authentik-worker
-  namespace: authentik
+  namespace: "authentik"
   labels:
+    helm.sh/chart: "authentik-2024.8.2"
     app.kubernetes.io/name: "authentik"
     app.kubernetes.io/instance: "authentik"
     app.kubernetes.io/component: "worker"
+    app.kubernetes.io/managed-by: "Helm"
     app.kubernetes.io/part-of: "authentik"
-    app.kubernetes.io/version: "2024.8.1"
+    app.kubernetes.io/version: "2024.8.2"
 spec:
   replicas: 1
   revisionHistoryLimit: 3
@@ -116,17 +129,19 @@ spec:
   template:
     metadata:
       labels:
+        helm.sh/chart: "authentik-2024.8.2"
         app.kubernetes.io/name: "authentik"
         app.kubernetes.io/instance: "authentik"
         app.kubernetes.io/component: "worker"
+        app.kubernetes.io/managed-by: "Helm"
         app.kubernetes.io/part-of: "authentik"
-        app.kubernetes.io/version: "2024.8.1"
+        app.kubernetes.io/version: "2024.8.2"
     spec:
-      serviceAccountName: authentik-vault-service-account
+      serviceAccountName: authentik
       terminationGracePeriodSeconds: 30
       containers:
         - name: worker
-          image: ghcr.io/goauthentik/server:2024.8.1
+          image: ghcr.io/goauthentik/server:2024.8.2
           imagePullPolicy: IfNotPresent
           args:
             - worker
@@ -135,6 +150,7 @@ spec:
             - secretRef:
                 name: authentik-secret
           livenessProbe:
+
             exec:
               command:
               - ak
@@ -145,6 +161,7 @@ spec:
             successThreshold: 1
             timeoutSeconds: 1
           readinessProbe:
+
             exec:
               command:
               - ak
@@ -155,6 +172,7 @@ spec:
             successThreshold: 1
             timeoutSeconds: 1
           startupProbe:
+
             exec:
               command:
               - ak
@@ -164,6 +182,8 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             timeoutSeconds: 1
+          resources:
+            {}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -176,4 +196,3 @@ spec:
                     app.kubernetes.io/component: "worker"
                 topologyKey: kubernetes.io/hostname
       enableServiceLinks: true
-
