@@ -3773,7 +3773,7 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 spec:
   address: "http://vault.vault.svc.cluster.local:8200"
-  skipTLSVerify: false
+  skipTLSVerify: true
 ---
 # Source: vault-secrets-operator/templates/hook-upgrade-crds.yaml
 apiVersion: v1
