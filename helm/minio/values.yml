@@ -21,7 +21,7 @@ podAnnotations:
 
 extraEnvVars:
   - name: MINIO_BROWSER_REDIRECT_URL
-    value: minio.keindev.ru
+    value: https://minio.keindev.ru/
 
 hostAliases:
   - ip: "192.168.8.33"
