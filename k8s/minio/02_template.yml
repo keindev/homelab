@@ -125,15 +125,11 @@ spec:
         prometheus.io/port: "9000"
         prometheus.io/scrape: "true"
     spec:
-      hostAliases:
-        - ip: "192.168.8.33"
-          hostnames:
-            - "authentik.keindev.ru"
-
+      
       serviceAccountName: minio-vault-service-account
       affinity:
         podAffinity:
-
+          
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
@@ -144,8 +140,12 @@ spec:
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
-
+          
       automountServiceAccountToken: false
+      hostAliases:
+        - hostnames:
+          - authentik.keindev.ru
+          ip: 192.168.8.33
       securityContext:
         fsGroup: 1001
         fsGroupChangePolicy: OnRootMismatch
@@ -195,6 +195,8 @@ spec:
               value: "9001"
             - name: MINIO_DATA_DIR
               value: "/bitnami/minio/data"
+            - name: MINIO_BROWSER_REDIRECT_URL
+              value: minio.keindev.ru
           envFrom:
           ports:
             - name: minio-api
