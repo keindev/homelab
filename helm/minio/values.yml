@@ -19,13 +19,14 @@ podAnnotations:
   prometheus.io/path: "/minio/v2/metrics/cluster"
   prometheus.io/port: "9000"
 
-#extraEnvVars:
-#  - name: MINIO_BROWSER_REDIRECT_URL
-#    value: minio.keindev.ru
+extraEnvVars:
+  - name: MINIO_BROWSER_REDIRECT_URL
+    value: minio.keindev.ru
 
 hostAliases:
   - ip: "192.168.8.33"
     hostnames:
+      - "minio.keindev.ru"
       - "authentik.keindev.ru"
 
 metrics:

@@ -144,6 +144,7 @@ spec:
       automountServiceAccountToken: false
       hostAliases:
         - hostnames:
+          - minio.keindev.ru
           - authentik.keindev.ru
           ip: 192.168.8.33
       securityContext:
@@ -195,6 +196,8 @@ spec:
               value: "9001"
             - name: MINIO_DATA_DIR
               value: "/bitnami/minio/data"
+            - name: MINIO_BROWSER_REDIRECT_URL
+              value: minio.keindev.ru
           envFrom:
           ports:
             - name: minio-api
