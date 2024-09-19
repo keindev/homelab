@@ -1,0 +1,248 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: plane
+  name: plane-admin-wl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.name: plane-plane-admin
+  template:
+    metadata:
+      namespace: plane
+      labels:
+        app.name: plane-plane-admin
+    spec:
+      containers:
+      - name: plane-admin
+        imagePullPolicy: IfNotPresent
+        image: makeplane/plane-admin:stable
+        stdin: true
+        tty: true
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "50m"
+          limits:
+            memory: "1000Mi"
+            cpu: "500m"
+        command:
+          - node
+        args:
+          - admin/server.js
+          - admin
+      serviceAccount: plane-vault-service-account
+      serviceAccountName: plane-vault-service-account
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: plane
+  name: plane-api-wl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.name: plane-plane-api
+  template:
+    metadata:
+      namespace: plane
+      labels:
+        app.name: plane-plane-api
+    spec:
+      containers:
+      - name: plane-api
+        imagePullPolicy: IfNotPresent
+        image: makeplane/plane-backend:stable
+        stdin: true
+        tty: true
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "50m"
+          limits:
+            memory: "1000Mi"
+            cpu: "500m"
+        command:
+          - ./bin/docker-entrypoint-api.sh
+        envFrom:
+          - secretRef:
+              name: plane-secret
+              optional: false
+          - configMapRef:
+              name: plane-vars
+              optional: false
+        readinessProbe:
+          failureThreshold: 30
+          httpGet:
+            path: /
+            port: 8000
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+
+      serviceAccount: plane-vault-service-account
+      serviceAccountName: plane-vault-service-account
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: plane
+  name: plane-beat-worker-wl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.name: plane-plane-beat-worker
+  template:
+    metadata:
+      namespace: plane
+      labels:
+        app.name: plane-plane-beat-worker
+    spec:
+      containers:
+      - name: plane-beat-worker
+        imagePullPolicy: IfNotPresent
+        image: makeplane/plane-backend:stable
+        stdin: true
+        tty: true
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "50m"
+          limits:
+            memory: "1000Mi"
+            cpu: "500m"
+        command:
+          - ./bin/docker-entrypoint-beat.sh
+        envFrom:
+          - secretRef:
+              name: plane-secret
+              optional: false
+          - configMapRef:
+              name: plane-vars
+              optional: false
+
+      serviceAccount: plane-vault-service-account
+      serviceAccountName: plane-vault-service-account
+---
+# Source: plane-ce/templates/workloads/space.deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: plane
+  name: plane-space-wl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.name: plane-plane-space
+  template:
+    metadata:
+      namespace: plane
+      labels:
+        app.name: plane-plane-space
+    spec:
+      containers:
+      - name: plane-space
+        imagePullPolicy: IfNotPresent
+        image: makeplane/plane-space:stable
+        stdin: true
+        tty: true
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "50m"
+          limits:
+            memory: "1000Mi"
+            cpu: "500m"
+        command:
+          - node
+        args:
+          - space/server.js
+          - space
+      serviceAccount: plane-vault-service-account
+      serviceAccountName: plane-vault-service-account
+---
+# Source: plane-ce/templates/workloads/web.deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: plane
+  name: plane-web-wl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.name: plane-plane-web
+  template:
+    metadata:
+      namespace: plane
+      labels:
+        app.name: plane-plane-web
+    spec:
+      containers:
+      - name: plane-web
+        imagePullPolicy: IfNotPresent
+        image: makeplane/plane-frontend:stable
+        stdin: true
+        tty: true
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "50m"
+          limits:
+            memory: "1000Mi"
+            cpu: "500m"
+        command:
+          - node
+        args:
+          - web/server.js
+          - web
+      serviceAccount: plane-vault-service-account
+      serviceAccountName: plane-vault-service-account
+---
+# Source: plane-ce/templates/workloads/worker.deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: plane
+  name: plane-worker-wl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.name: plane-plane-worker
+  template:
+    metadata:
+      namespace: plane
+      labels:
+        app.name: plane-plane-worker
+    spec:
+      containers:
+      - name: plane-worker
+        imagePullPolicy: IfNotPresent
+        image: makeplane/plane-backend:stable
+        stdin: true
+        tty: true
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "50m"
+          limits:
+            memory: "1000Mi"
+            cpu: "500m"
+        command:
+          - ./bin/docker-entrypoint-worker.sh
+        envFrom:
+          - secretRef:
+              name: plane-secret
+              optional: false
+          - configMapRef:
+              name: plane-vars
+              optional: false
+      serviceAccount: plane-vault-service-account
+      serviceAccountName: plane-vault-service-account

@@ -1,0 +1,23 @@
+postgres:
+  local_setup: false
+
+redis:
+  local_setup: false
+
+minio:
+  local_setup: false
+
+ingress:
+  enabled: false
+
+env:
+  pgdb_username:	username
+  pgdb_password:	password
+  pgdb_name: database
+  pgdb_remote_url: postgresql://postgres.postgres.svc.cluster.local
+  remote_redis_url: redis://redis.redis.svc.cluster.local
+  aws_access_key: aws_access_key
+  aws_secret_access_key: aws_secret_access_key
+  aws_region: homelab
+  aws_s3_endpoint_url: https://s3.keindev.ru/
+  secret_key: secret_key

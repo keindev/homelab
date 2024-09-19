@@ -1,0 +1,29 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: plane
+  name: plane-api-migrate
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app.name: plane-plane-api-migrate
+    spec:
+      containers:
+      - name: plane-api-migrate
+        image: makeplane/plane-backend:stable
+        command:
+          - ./bin/docker-entrypoint-migrator.sh
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: plane-secret
+              optional: false
+          - configMapRef:
+              name: plane-vars
+              optional: false
+      restartPolicy: OnFailure
+      serviceAccount: plane-vault-service-account
+      serviceAccountName: plane-vault-service-account
