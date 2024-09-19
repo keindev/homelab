@@ -19,7 +19,7 @@ spec:
           namespace: penpot
           port: 80
     - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/api/export/`)"
+      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/api/export`)"
       priority: 15
       services:
         - kind: Service
