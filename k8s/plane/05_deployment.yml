@@ -15,6 +15,11 @@ spec:
       labels:
         app.name: plane-plane-admin
     spec:
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
+            - "s3.keindev.ru"
       containers:
       - name: plane-admin
         imagePullPolicy: IfNotPresent
@@ -52,6 +57,11 @@ spec:
       labels:
         app.name: plane-plane-api
     spec:
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
+            - "s3.keindev.ru"
       containers:
       - name: plane-api
         imagePullPolicy: IfNotPresent
@@ -103,6 +113,11 @@ spec:
       labels:
         app.name: plane-plane-beat-worker
     spec:
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
+            - "s3.keindev.ru"
       containers:
       - name: plane-beat-worker
         imagePullPolicy: IfNotPresent
@@ -146,6 +161,11 @@ spec:
       labels:
         app.name: plane-plane-space
     spec:
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
+            - "s3.keindev.ru"
       containers:
       - name: plane-space
         imagePullPolicy: IfNotPresent
@@ -184,6 +204,11 @@ spec:
       labels:
         app.name: plane-plane-web
     spec:
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
+            - "s3.keindev.ru"
       containers:
       - name: plane-web
         imagePullPolicy: IfNotPresent
@@ -222,6 +247,11 @@ spec:
       labels:
         app.name: plane-plane-worker
     spec:
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
+            - "s3.keindev.ru"
       containers:
       - name: plane-worker
         imagePullPolicy: IfNotPresent

@@ -1,0 +1,61 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: plane-ingress
+  namespace: plane
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`plane.keindev.ru`)
+      priority: 10
+      services:
+        - kind: Service
+          name: plane-web
+          namespace: plane
+          port: 3000
+    - kind: Rule
+      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/spaces`)"
+      priority: 15
+      services:
+        - kind: Service
+          name: plane-space
+          namespace: plane
+          port: 3000
+    - kind: Rule
+      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/god-mode`)"
+      priority: 20
+      services:
+        - kind: Service
+          name: plane-admin
+          namespace: plane
+          port: 3000
+    - kind: Rule
+      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/api`)"
+      priority: 22
+      services:
+        - kind: Service
+          name: plane-api
+          namespace: plane
+          port: 8000
+    - kind: Rule
+      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/auth`)"
+      priority: 22
+      services:
+        - kind: Service
+          name: plane-api
+          namespace: plane
+          port: 8000
+  tls:
+    secretName: local-keindev-ru-tls
+
+
+
+
+
+
+
