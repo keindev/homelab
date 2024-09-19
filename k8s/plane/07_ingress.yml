@@ -19,7 +19,7 @@ spec:
           namespace: plane
           port: 3000
     - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/spaces`)"
+      match: "Host(`plane.keindev.ru`) && PathPrefix(`/spaces`)"
       priority: 15
       services:
         - kind: Service
@@ -27,7 +27,7 @@ spec:
           namespace: plane
           port: 3000
     - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/god-mode`)"
+      match: "Host(`plane.keindev.ru`) && PathPrefix(`/god-mode`)"
       priority: 20
       services:
         - kind: Service
@@ -35,7 +35,7 @@ spec:
           namespace: plane
           port: 3000
     - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/api`)"
+      match: "Host(`plane.keindev.ru`) && PathPrefix(`/api`)"
       priority: 22
       services:
         - kind: Service
@@ -43,7 +43,7 @@ spec:
           namespace: plane
           port: 8000
     - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/auth`)"
+      match: "Host(`plane.keindev.ru`) && PathPrefix(`/auth`)"
       priority: 22
       services:
         - kind: Service
