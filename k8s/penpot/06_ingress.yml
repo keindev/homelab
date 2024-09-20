@@ -34,14 +34,14 @@ spec:
     #      name: penpot-backend
     #      namespace: penpot
     #      port: 6060
-    #- kind: Rule
-    #  match: "Host(`penpot.keindev.ru`) && PathPrefix(`/assets`)"
-    #  priority: 21
-    #  services:
-    #    - kind: Service
-    #      name: penpot-backend
-    #      namespace: penpot
-    #      port: 6060
+    - kind: Rule
+      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/assets`)"
+      priority: 21
+      services:
+        - kind: Service
+          name: penpot-backend
+          namespace: penpot
+          port: 6060
     #- kind: Rule
     #  match: "Host(`penpot.keindev.ru`) && PathPrefix(`/webhooks`)"
     #  priority: 22
