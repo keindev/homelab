@@ -18,46 +18,46 @@ spec:
           name: penpot-frontend
           namespace: penpot
           port: 80
-    - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/api/export`)"
-      priority: 15
-      services:
-        - kind: Service
-          name: penpot-exporter
-          namespace: penpot
-          port: 6061
-    - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/api`)"
-      priority: 20
-      services:
-        - kind: Service
-          name: penpot-backend
-          namespace: penpot
-          port: 6060
-    - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/assets`)"
-      priority: 21
-      services:
-        - kind: Service
-          name: penpot-backend
-          namespace: penpot
-          port: 6060
-    - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/webhooks`)"
-      priority: 22
-      services:
-        - kind: Service
-          name: penpot-backend
-          namespace: penpot
-          port: 6060
-    - kind: Rule
-      match: "Host(`penpot.keindev.ru`) && PathPrefix(`/ws/notifications`)"
-      priority: 23
-      services:
-        - kind: Service
-          name: penpot-backend
-          namespace: penpot
-          port: 6060
+    #- kind: Rule
+    #  match: "Host(`penpot.keindev.ru`) && PathPrefix(`/api/export`)"
+    #  priority: 15
+    #  services:
+    #    - kind: Service
+    #      name: penpot-exporter
+    #      namespace: penpot
+    #      port: 6061
+    #- kind: Rule
+    #  match: "Host(`penpot.keindev.ru`) && PathPrefix(`/api`)"
+    #  priority: 20
+    #  services:
+    #    - kind: Service
+    #      name: penpot-backend
+    #      namespace: penpot
+    #      port: 6060
+    #- kind: Rule
+    #  match: "Host(`penpot.keindev.ru`) && PathPrefix(`/assets`)"
+    #  priority: 21
+    #  services:
+    #    - kind: Service
+    #      name: penpot-backend
+    #      namespace: penpot
+    #      port: 6060
+    #- kind: Rule
+    #  match: "Host(`penpot.keindev.ru`) && PathPrefix(`/webhooks`)"
+    #  priority: 22
+    #  services:
+    #    - kind: Service
+    #      name: penpot-backend
+    #      namespace: penpot
+    #      port: 6060
+    #- kind: Rule
+    #  match: "Host(`penpot.keindev.ru`) && PathPrefix(`/ws/notifications`)"
+    #  priority: 23
+    #  services:
+    #    - kind: Service
+    #      name: penpot-backend
+    #      namespace: penpot
+    #      port: 6060
   tls:
     secretName: local-keindev-ru-tls
 
@@ -90,23 +90,3 @@ spec:
           name: authentik-server.authentik.svc.cluster.local
   tls:
     secretName: local-keindev-ru-tls
-
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: penpot-export
-  namespace: penpot
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-spec:
-  entryPoints:
-    - websecure
-  routes:
-    - kind: Rule
-      match: Host(`exporttest.keindev.ru`)
-      priority: 10
-      services:
-        - name: penpot-exporter
-          port: 6061
-
