@@ -81,6 +81,7 @@ spec:
           hostnames:
             - "authentik.keindev.ru"
             - "s3.keindev.ru"
+            - "penpot.keindev.ru"
       containers:
         - name: penpot-exporter
           image: penpotapp/exporter:latest
@@ -89,9 +90,6 @@ spec:
           envFrom:
             - secretRef:
                 name: penpot-common-secret
-          env:
-            - name: PENPOT_PUBLIC_URI
-              value: "http://penpot-frontend.penpot.svc.cluster.local/"
 
 ---
 apiVersion: apps/v1
