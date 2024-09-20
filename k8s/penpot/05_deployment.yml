@@ -76,22 +76,16 @@ spec:
       labels:
         app: penpot-exporter
     spec:
-      hostAliases:
-        - ip: "192.168.8.33"
-          hostnames:
-            - "authentik.keindev.ru"
-            - "s3.keindev.ru"
       containers:
         - name: penpot-exporter
           image: penpotapp/exporter:latest
           ports:
             - containerPort: 6061
-          envFrom:
-            - secretRef:
-                name: penpot-common-secret
           env:
             - name: PENPOT_PUBLIC_URI
               value: "http://penpot-frontend.penpot.svc.cluster.local"
+            - name: PENPOT_REDIS_URI
+              value: "redis://redis.redis.svc.cluster.local/0"
 
 ---
 apiVersion: apps/v1
