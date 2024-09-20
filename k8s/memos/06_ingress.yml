@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: memos
+  namespace: memos
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`memos.keindev.ru`)
+      priority: 10
+      services:
+        - name: memos-service
+          namespace: memos
+          port: 5230
+  tls:
+    secretName: local-keindev-ru-tls
