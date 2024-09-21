@@ -42,18 +42,3 @@ spec:
       port: 6061
       targetPort: 6061
   type: ClusterIP
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: penpot-mailcatch
-  namespace: penpot
-spec:
-  selector:
-    app: penpot-mailcatch
-  ports:
-    - protocol: TCP
-      port: 1080
-      targetPort: 1080
-  type: ClusterIP

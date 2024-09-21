@@ -87,27 +87,3 @@ spec:
             - name: PENPOT_REDIS_URI
               value: "redis://redis.redis.svc.cluster.local/0"
 
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: penpot-mailcatch
-  namespace: penpot
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: penpot-mailcatch
-  template:
-    metadata:
-      labels:
-        app: penpot-mailcatch
-    spec:
-      containers:
-        - name: penpot-exporter
-          image: sj26/mailcatcher:latest
-          ports:
-            - name: ui
-              containerPort: 1080
-            - name: mail
-              containerPort: 1025
