@@ -2,14 +2,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: memos
+  name: affine
   namespace: argocd
 spec:
   destination:
-    namespace: memos
+    namespace: affine
     server: https://kubernetes.default.svc
   source:
-    path: k8s/memos
+    path: k8s/affine
     repoURL: https://github.com/keindev/homelab.git
     targetRevision: main
   project: default

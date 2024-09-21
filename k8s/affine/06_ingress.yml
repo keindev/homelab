@@ -2,8 +2,8 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: memos
-  namespace: memos
+  name: affine
+  namespace: affine
   annotations:
     kubernetes.io/ingress.class: traefik-external
 spec:
@@ -11,11 +11,11 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`memos.keindev.ru`)
+      match: Host(`affine.keindev.ru`)
       priority: 10
       services:
-        - name: memos-service
-          namespace: memos
-          port: 5230
+        - name: affine-service
+          namespace: affine
+          port: 3010
   tls:
     secretName: local-keindev-ru-tls

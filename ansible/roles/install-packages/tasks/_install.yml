@@ -1,0 +1,9 @@
+---
+- name: Install packages (with downgrade option).
+  package:
+    name:
+      - "nfs-common"
+    state: present
+    allow_downgrade: true
+
+

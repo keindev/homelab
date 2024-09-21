@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: affine
+  namespace: affine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: affine
+  template:
+    metadata:
+      labels:
+        app: affine
+    spec:
+      containers:
+        - name: affine
+          image: ghcr.io/toeverything/affine-graphql:stable
+          ports:
+            - containerPort: 3010
+          command:
+            ['sh', '-c', 'node ./scripts/self-host-predeploy && node ./dist/index.js']
+          envFrom:
+            - secretRef:
+                name: affine-secret
+            - secretRef:
+                name: affine-common-secret
+          volumeMounts:
+            - name: affine-config
+              mountPath: /root/.affine/config
+            - name: affine-storage
+              mountPath: /root/.affine/storage
+      volumes:
+        - name: affine-config
+          persistentVolumeClaim:
+            claimName: affine-config-pvc
+        - name: affine-storage
+          persistentVolumeClaim:
+            claimName: affine-storage-pvc
+

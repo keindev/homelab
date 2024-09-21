@@ -13,6 +13,10 @@
       include_role:
         name: disable-swap
 
+    - name: Install packages
+      include_role:
+        name: install-packages
+
     - name: Install Docker
       include_role:
         name: docker
