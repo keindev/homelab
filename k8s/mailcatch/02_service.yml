@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mailcatch
+  namespace: mailcatch
+spec:
+  selector:
+    app: mailcatch
+  ports:
+    - protocol: TCP
+      port: 1080
+      targetPort: 1080
+    - protocol: TCP
+      port: 1025
+      targetPort: 1025
+  type: ClusterIP

@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailcatch
+  namespace: mailcatch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailcatch
+  template:
+    metadata:
+      labels:
+        app: mailcatch
+    spec:
+      containers:
+        - name: mailcatch
+          image: sj26/mailcatcher:latest
+          ports:
+            - name: ui
+              containerPort: 1080
+            - name: mail
+              containerPort: 1025
