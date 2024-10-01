@@ -8,10 +8,12 @@ spec:
   selector:
     app: mailcatch
   ports:
-    - protocol: TCP
+    - name: web
+      protocol: TCP
       port: 1080
       targetPort: 1080
-    - protocol: TCP
+    - name: smtp
+      protocol: TCP
       port: 1025
       targetPort: 1025
   type: ClusterIP
