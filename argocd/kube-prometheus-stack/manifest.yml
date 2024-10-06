@@ -2,18 +2,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prometheus-operator
+  name: kube-prometheus-stack
   namespace: argocd
 spec:
   destination:
-    namespace: prometheus-operator
+    namespace: kube-prometheus-stack
     server: https://kubernetes.default.svc
   source:
-    path: k8s/prometheus-operator
+    path: k8s/kube-prometheus-stack
     repoURL: https://github.com/keindev/homelab.git
     targetRevision: main
   project: default
   syncPolicy:
     automated:
       selfHeal: true
-
