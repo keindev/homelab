@@ -3,10 +3,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: kube-prometheus-stack
-  namespace: kube-prometheus-stack
+  namespace: monitoring
 spec:
   destination:
-    namespace: kube-prometheus-stack
+    namespace: monitoring
     server: https://kubernetes.default.svc
   source:
     path: k8s/kube-prometheus-stack
@@ -16,3 +16,4 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
+
