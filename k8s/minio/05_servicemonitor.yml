@@ -17,4 +17,5 @@ spec:
     - minio
   selector:
     matchLabels:
-      app: minio
+      app.kubernetes.io/instance: minio
+      app.kubernetes.io/name: minio
