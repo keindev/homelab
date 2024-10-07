@@ -10,8 +10,13 @@ metadata:
   namespace: minio
 spec:
   endpoints:
-  - port: "9000"
+  - port: minio-api
+    interval: 60s
     path: /minio/v2/metrics/cluster
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
+  jobLabel: app.kubernetes.io/name
   namespaceSelector:
     matchNames:
     - minio
