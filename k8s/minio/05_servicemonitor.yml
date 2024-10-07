@@ -10,7 +10,7 @@ metadata:
   namespace: minio
 spec:
   endpoints:
-  - port: metrics
+  - port: "9000"
     path: /minio/v2/metrics/cluster
   namespaceSelector:
     matchNames:
