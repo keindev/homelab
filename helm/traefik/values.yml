@@ -62,4 +62,9 @@ service:
     - 192.168.8.33
 
 metrics:
-  prometheus: {}
+  prometheus:
+    addEntryPointsLabels: true
+    addServicesLabels: true
+    addRoutersLabels: true
+    buckets: "0.100000, 0.300000, 1.200000, 5.000000"
+
