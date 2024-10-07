@@ -9,8 +9,8 @@ metadata:
     app.kubernetes.io/instance: minio
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: minio
-    app.kubernetes.io/version: 2024.9.13
-    helm.sh/chart: minio-14.7.10
+    app.kubernetes.io/version: 2024.10.2
+    helm.sh/chart: minio-14.7.15
 spec:
   podSelector:
     matchLabels:
@@ -37,8 +37,8 @@ metadata:
     app.kubernetes.io/instance: minio
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: minio
-    app.kubernetes.io/version: 2024.9.13
-    helm.sh/chart: minio-14.7.10
+    app.kubernetes.io/version: 2024.10.2
+    helm.sh/chart: minio-14.7.15
 spec:
   maxUnavailable: 1
   selector:
@@ -56,8 +56,8 @@ metadata:
     app.kubernetes.io/instance: minio
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: minio
-    app.kubernetes.io/version: 2024.9.13
-    helm.sh/chart: minio-14.7.10
+    app.kubernetes.io/version: 2024.10.2
+    helm.sh/chart: minio-14.7.15
 spec:
   accessModes:
     - "ReadWriteOnce"
@@ -76,8 +76,8 @@ metadata:
     app.kubernetes.io/instance: minio
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: minio
-    app.kubernetes.io/version: 2024.9.13
-    helm.sh/chart: minio-14.7.10
+    app.kubernetes.io/version: 2024.10.2
+    helm.sh/chart: minio-14.7.15
 spec:
   type: ClusterIP
   ports:
@@ -103,8 +103,8 @@ metadata:
     app.kubernetes.io/instance: minio
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: minio
-    app.kubernetes.io/version: 2024.9.13
-    helm.sh/chart: minio-14.7.10
+    app.kubernetes.io/version: 2024.10.2
+    helm.sh/chart: minio-14.7.15
 spec:
   selector:
     matchLabels:
@@ -118,8 +118,8 @@ spec:
         app.kubernetes.io/instance: minio
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: minio
-        app.kubernetes.io/version: 2024.9.13
-        helm.sh/chart: minio-14.7.10
+        app.kubernetes.io/version: 2024.10.2
+        helm.sh/chart: minio-14.7.15
       annotations:
         prometheus.io/path: /minio/v2/metrics/cluster
         prometheus.io/port: "9000"
@@ -154,7 +154,7 @@ spec:
         sysctls: []
       containers:
         - name: minio
-          image: docker.io/bitnami/minio:2024.9.13-debian-12-r0
+          image: docker.io/bitnami/minio:2024.10.2-debian-12-r0
           imagePullPolicy: "IfNotPresent"
           securityContext:
             allowPrivilegeEscalation: false

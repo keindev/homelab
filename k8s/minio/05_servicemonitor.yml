@@ -1,0 +1,20 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: minio
+    release: prometheus
+    name: minio
+  name: minio
+  namespace: minio
+spec:
+  endpoints:
+  - port: metrics
+    path: /minio/v2/metrics/cluster
+  namespaceSelector:
+    matchNames:
+    - minio
+  selector:
+    matchLabels:
+      app: minio

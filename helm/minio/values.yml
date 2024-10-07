@@ -14,6 +14,9 @@ serviceAccount:
   create: false
   name: "minio-vault-service-account"
 
+metrics:
+  enabled: true
+
 podAnnotations:
   prometheus.io/scrape: "true"
   prometheus.io/path: "/minio/v2/metrics/cluster"
@@ -28,6 +31,3 @@ hostAliases:
     hostnames:
       - "minio.keindev.ru"
       - "authentik.keindev.ru"
-
-metrics:
-  enabled: false
