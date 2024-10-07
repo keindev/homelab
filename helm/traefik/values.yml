@@ -60,3 +60,6 @@ service:
   loadBalancerSourceRanges: []
   externalIPs:
     - 192.168.8.33
+
+metrics:
+  prometheus: {}
