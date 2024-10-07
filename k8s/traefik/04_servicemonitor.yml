@@ -11,9 +11,10 @@ metadata:
 spec:
   endpoints:
   - port: metrics
+    path: /metrics
   namespaceSelector:
     matchNames:
     - traefik
   selector:
     matchLabels:
-      app: traefik
+      app: traefik-metrics
