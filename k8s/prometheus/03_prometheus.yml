@@ -25,6 +25,7 @@ spec:
           - node-exporter
           - kubelet
           - traefik
+          - minio
           - prometheus
           - default
   serviceMonitorSelector:
@@ -37,6 +38,7 @@ spec:
       - node-exporter
       - kubelet
       - traefik
+      - minio
   storage:
     volumeClaimTemplate:
       spec:
