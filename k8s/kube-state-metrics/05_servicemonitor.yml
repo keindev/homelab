@@ -13,7 +13,7 @@ metadata:
 spec:
   namespaceSelector:
     matchNames:
-    - monitoring
+    - kube-state-metrics
   endpoints:
   - port: http-metrics
     interval: 30s
