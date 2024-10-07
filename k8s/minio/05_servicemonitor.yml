@@ -13,7 +13,7 @@ spec:
   - port: minio-api
     interval: 60s
     path: /minio/v2/metrics/cluster
-    scheme: https
+    scheme: http
     tlsConfig:
       insecureSkipVerify: true
   jobLabel: app.kubernetes.io/name
