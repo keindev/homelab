@@ -5121,6 +5121,29 @@ spec:
 # Source: longhorn/templates/validate-psp-install.yaml
 #
 ---
+# Source: longhorn/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: longhorn-prometheus-servicemonitor
+  namespace: longhorn-system
+  labels:
+    app.kubernetes.io/name: longhorn
+    helm.sh/chart: longhorn-1.7.1
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    app.kubernetes.io/version: v1.7.1
+    name: longhorn-prometheus-servicemonitor
+spec:
+  selector:
+    matchLabels:
+      app: longhorn-manager
+  namespaceSelector:
+    matchNames:
+    - longhorn-system
+  endpoints:
+  - port: manager
+---
 # Source: longhorn/templates/postupgrade-job.yaml
 apiVersion: batch/v1
 kind: Job
