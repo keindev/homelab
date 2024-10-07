@@ -13,7 +13,7 @@ spec:
   - port: metrics
   namespaceSelector:
     matchNames:
-    - kube-system
+    - traefik
   selector:
     matchLabels:
       app: traefik
