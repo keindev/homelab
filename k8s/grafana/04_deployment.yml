@@ -16,6 +16,10 @@ spec:
       labels:
         app: grafana
     spec:
+      hostAliases:
+        - ip: "192.168.8.33"
+          hostnames:
+            - "authentik.keindev.ru"
       containers:
         - name: grafana
           image: grafana/grafana:latest
