@@ -34,7 +34,7 @@ spec:
   externalTrafficPolicy: Local
   ports:
     - port: 53
-      nodePort: 53
+      nodePort:  30053
       targetPort: dns
       protocol: TCP
       name: dns
