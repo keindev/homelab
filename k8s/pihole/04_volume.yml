@@ -2,11 +2,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: pihole
+  namespace: pihole
   labels:
     app: pihole
     chart: pihole-2.26.1
     release: pihole
-  name: pihole
 spec:
   accessModes:
     - ReadWriteOnce

@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pihole
+  namespace: pihole
   labels:
     app: pihole
     chart: pihole-2.26.1
