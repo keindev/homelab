@@ -30,11 +30,10 @@ metadata:
     chart: pihole-2.26.1
     release: pihole
 spec:
-  type: NodePort
+  type: LoadBalancer
   externalTrafficPolicy: Local
   ports:
     - port: 53
-      nodePort:  30053
       targetPort: dns
       protocol: TCP
       name: dns
