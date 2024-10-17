@@ -30,16 +30,17 @@ metadata:
     chart: pihole-2.26.1
     release: pihole
 spec:
+  type: NodePort
   externalTrafficPolicy: Local
   ports:
     - port: 53
+      nodePort: 53
       targetPort: dns
       protocol: TCP
       name: dns
   selector:
     app: pihole
   sessionAffinity: None
-  type: NodePort
 ---
 apiVersion: v1
 kind: Service
