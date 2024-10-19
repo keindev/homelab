@@ -1,3 +1,5 @@
-/ansible/vars/secrets.yml
+secrets.yml
 # remove after changes
 /new-media/
+/proxmox/
+
