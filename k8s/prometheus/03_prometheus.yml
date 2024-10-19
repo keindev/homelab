@@ -27,6 +27,7 @@ spec:
           - traefik
           - minio
           - prometheus
+          - argocd
           - default
   serviceMonitorSelector:
     matchExpressions:
@@ -39,6 +40,12 @@ spec:
       - kubelet
       - traefik
       - minio
+      - argocd-metrics
+      - argocd-server-metrics
+      - argocd-repo-server-metrics
+      - argocd-applicationset-controller-metrics
+      - argocd-dex-server
+      - argocd-notifications-controller
   storage:
     volumeClaimTemplate:
       spec:
