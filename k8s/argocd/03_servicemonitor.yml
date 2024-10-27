@@ -6,6 +6,7 @@ metadata:
   namespace: argocd
   labels:
     release: prometheus-operator
+    name: argocd-metrics
 spec:
   namespaceSelector:
     matchNames:
@@ -24,6 +25,7 @@ metadata:
   namespace: argocd
   labels:
     release: prometheus-operator
+    name: argocd-server-metrics
 spec:
   namespaceSelector:
     matchNames:
@@ -42,6 +44,7 @@ metadata:
   namespace: argocd
   labels:
     release: prometheus-operator
+    name: argocd-repo-server-metrics
 spec:
   namespaceSelector:
     matchNames:
@@ -60,6 +63,7 @@ metadata:
   namespace: argocd
   labels:
     release: prometheus-operator
+    name: argocd-applicationset-controller-metrics
 spec:
   namespaceSelector:
     matchNames:
@@ -78,6 +82,7 @@ metadata:
   namespace: argocd
   labels:
     release: prometheus-operator
+    name: argocd-dex-server
 spec:
   namespaceSelector:
     matchNames:
@@ -95,6 +100,7 @@ metadata:
   name: argocd-notifications-controller
   labels:
     release: prometheus-operator
+    name: argocd-notifications-controller
 spec:
   namespaceSelector:
     matchNames:
