@@ -44,7 +44,6 @@ spec:
       - argocd-server-metrics
       - argocd-repo-server-metrics
       - argocd-applicationset-controller-metrics
-      - argocd-dex-server
       - argocd-notifications-controller
   storage:
     volumeClaimTemplate:
