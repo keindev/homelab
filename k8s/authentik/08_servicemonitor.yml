@@ -1,0 +1,18 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: authentik-server-metrics
+  namespace: authentik
+  labels:
+    release: prometheus-operator
+    name: authentik-server-metrics
+spec:
+  namespaceSelector:
+    matchNames:
+    - authentik
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: authentik
+  endpoints:
+  - port: metrics

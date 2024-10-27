@@ -28,6 +28,7 @@ spec:
           - minio
           - prometheus
           - argocd
+          - authentik
           - default
   serviceMonitorSelector:
     matchExpressions:
@@ -45,6 +46,7 @@ spec:
       - argocd-repo-server-metrics
       - argocd-applicationset-controller-metrics
       - argocd-notifications-controller
+      - authentik-server-metrics
   storage:
     volumeClaimTemplate:
       spec:
