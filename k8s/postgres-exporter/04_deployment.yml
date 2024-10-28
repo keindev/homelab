@@ -22,5 +22,5 @@ spec:
           - name: port
             containerPort: 9187
         envFrom:
-            - secretRef:
-                name: postgres-exporter-secret
+          - secretRef:
+              name: postgres-exporter-secret
