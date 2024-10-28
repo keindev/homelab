@@ -29,6 +29,7 @@ spec:
           - prometheus
           - argocd
           - authentik
+          - postgres-exporter
           - default
   serviceMonitorSelector:
     matchExpressions:
@@ -47,6 +48,7 @@ spec:
       - argocd-applicationset-controller-metrics
       - argocd-notifications-controller
       - authentik-server-metrics
+      - postgres-exporter-metrics
   storage:
     volumeClaimTemplate:
       spec:

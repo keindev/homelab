@@ -1,0 +1,18 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: postgres-exporter-metrics
+  namespace: postgres-exporter
+  labels:
+    release: prometheus-operator
+    name: postgres-exporter-metrics
+spec:
+  namespaceSelector:
+    matchNames:
+    - postgres-exporter
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postgres-exporter
+  endpoints:
+  - port: metrics
