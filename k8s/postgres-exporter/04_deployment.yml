@@ -19,7 +19,7 @@ spec:
       - name: postgres-exporter
         image: quay.io/prometheuscommunity/postgres-exporter
         ports:
-          - name: port
+          - name: metrics
             containerPort: 9187
         envFrom:
           - secretRef:

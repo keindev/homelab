@@ -8,7 +8,7 @@ spec:
     app: postgres-exporter
   type: ClusterIP
   ports:
-    - name: port
+    - name: metrics
       protocol: TCP
       port: 9187
       targetPort: 9187
