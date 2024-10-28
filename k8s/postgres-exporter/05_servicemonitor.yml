@@ -6,6 +6,7 @@ metadata:
   namespace: postgres-exporter
   labels:
     release: prometheus-operator
+    app.kubernetes.io/name: postgres-exporter
     name: postgres-exporter-metrics
 spec:
   namespaceSelector:

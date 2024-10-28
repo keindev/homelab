@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   name: postgres-exporter
   namespace: postgres-exporter
+  labels:
+    app.kubernetes.io/name: postgres-exporter
 spec:
   replicas: 1
   selector:
